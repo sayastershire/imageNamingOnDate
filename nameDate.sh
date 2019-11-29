@@ -8,6 +8,8 @@ echo Commencing mass rename out of $totalFile files.
 WORKDIR=\"$(echo $PWD)/*\"
 echo $WORKDIR
 for file in *; do
+    curInput=""
+    curInputAltered=""
     curInputRaw=$(identify -verbose "$file" | grep 'Created Date')
     curInput=${curInputRaw:26:11}
     percent=$(echo "scale=4;100/$totalFile*$curFile" | bc -l)
@@ -22,7 +24,7 @@ for file in *; do
         #echo $curInput
         ;;
     2)
-        curInputRaw=$(identify -verbose "$file" | grep 'exif:DateTime')
+        curInputRaw=$(identify -verbose "$file" | grep 'exif:DateTimeOriginal')
         curInput=${curInputRaw:19:11}
         curInputAltered=${curInput//:/}
         #echo $curInputAltered
